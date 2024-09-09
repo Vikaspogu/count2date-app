@@ -15,6 +15,7 @@ import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.components.Scaffold
+import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
@@ -24,7 +25,7 @@ import androidx.glance.layout.Column
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxSize
-import androidx.glance.layout.height
+import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
 import androidx.glance.layout.width
 import androidx.glance.layout.wrapContentSize
@@ -59,8 +60,7 @@ class DetailsWidget : GlanceAppWidget() {
             val events by eventRepository.getAllEvents().collectAsState(initial = emptyList())
             GlanceTheme {
                 Scaffold(
-                    modifier = GlanceModifier.fillMaxSize(),
-                    backgroundColor = GlanceTheme.colors.widgetBackground,
+                    modifier = GlanceModifier.fillMaxSize().background(Color.DarkGray),
                 ) {
                     LazyColumn(modifier = GlanceModifier.padding(top = 20.dp)) {
                         item { DetailsCard(events) }
@@ -76,53 +76,58 @@ fun DetailsCard(events: List<Event>) {
     Column {
         events.forEach { event ->
             Row(
-                modifier = GlanceModifier.fillMaxSize().clickable(actionStartActivity(MainActivity::class.java)),
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier = GlanceModifier.fillMaxWidth()
+                    .clickable(actionStartActivity(MainActivity::class.java)).padding(top = 5.dp, bottom = 5.dp),
+                horizontalAlignment = Alignment.Start,
+                verticalAlignment = Alignment.CenterVertically
             ) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = GlanceModifier
+                        .fillMaxSize()
+                        .wrapContentSize()
+                        .background(Color.LightGray)
+                        .cornerRadius(5.dp) // Makes the background circular
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalAlignment = Alignment.CenterVertically) {
+                        GlanceText(
+                            modifier = GlanceModifier.wrapContentSize(),
+                            text = getDaysLeft(event.eventDate).toString(),
+                            letterSpacing = 0.03f.sp,
+                            font = R.font.rubik,
+                            color = Color.DarkGray,
+                            fontSize = 16.sp
+                        )
+                        GlanceText(
+                            modifier = GlanceModifier.wrapContentSize(),
+                            text = "Days",
+                            letterSpacing = 0.03f.sp,
+                            font = R.font.rubik,
+                            color = Color.DarkGray,
+                            fontSize = 14.sp
+                        )
+                    }
+                }
+                Spacer(modifier = GlanceModifier.width(10.dp))
                 Column {
                     GlanceText(
                         modifier = GlanceModifier.wrapContentSize(),
                         text = event.description,
-                        color = Color.Black,
                         letterSpacing = 0.03f.sp,
                         font = R.font.rubik,
-                        fontSize = 16.sp
+                        color = Color.White,
+                        fontSize = 20.sp
                     )
                     GlanceText(
                         modifier = GlanceModifier.wrapContentSize(),
                         text = event.eventDate.formatDate(),
-                        color = Color.Black,
                         letterSpacing = 0.03f.sp,
                         font = R.font.rubik,
-                        fontSize = 16.sp
-                    )
-                }
-                Spacer(modifier = GlanceModifier.width(5.dp))
-                Column {
-                    GlanceText(
-                        modifier = GlanceModifier.wrapContentSize(),
-                        text = getDaysLeft(event.eventDate).toString(),
-                        color = Color.Magenta,
-                        letterSpacing = 0.03f.sp,
-                        font = R.font.rubik,
-                        fontSize = 18.sp
-                    )
-                    GlanceText(
-                        modifier = GlanceModifier.wrapContentSize(),
-                        text = "days",
-                        color = Color.Black,
-                        letterSpacing = 0.03f.sp,
-                        font = R.font.rubik,
-                        fontSize = 16.sp
+                        color = Color.White,
+                        fontSize = 20.sp
                     )
                 }
             }
-            Box(
-                modifier = GlanceModifier
-                    .fillMaxSize()
-                    .height(1.dp)
-                    .background(Color.Gray)
-            ) {}
         }
     }
 

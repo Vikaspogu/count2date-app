@@ -60,6 +60,7 @@ private fun Context.textAsBitmap(
     val baseline = -paint.ascent()
     val width = (paint.measureText(text) + 5f).toInt()
     val height = (baseline + paint.descent() + 15f).toInt()
+
     val image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
     val canvas = Canvas(image)
     canvas.drawText(text, 0f, baseline + 10f, paint)

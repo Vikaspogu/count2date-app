@@ -105,7 +105,7 @@ fun HomeScreen(modifier: Modifier, viewModel: HomeScreenViewModel = hiltViewMode
 
     Scaffold(modifier = modifier
         .fillMaxSize()
-        .padding(top = 5.dp), topBar = {
+        .padding(top = 10.dp), topBar = {
         CenterAlignedTopAppBar(title = {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
@@ -313,7 +313,7 @@ fun DismissBackground(dismissState: SwipeToDismissBoxState) {
     ) {
         Icon(
             Icons.Default.Delete,
-            contentDescription = "delete"
+            contentDescription = stringResource(R.string.delete)
         )
     }
 }
@@ -331,12 +331,11 @@ fun EventItem(event: Event, viewModel: HomeScreenViewModel) {
             when (it) {
                 SwipeToDismissBoxValue.StartToEnd -> {
                 }
-
                 SwipeToDismissBoxValue.EndToStart -> {
                     viewModel.deleteEvent(eventId)
-                    Toast.makeText(context, "Item deleted", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,
+                        context.getString(R.string.event_deleted), Toast.LENGTH_SHORT).show()
                 }
-
                 SwipeToDismissBoxValue.Settled -> return@rememberSwipeToDismissBoxState false
             }
             return@rememberSwipeToDismissBoxState true

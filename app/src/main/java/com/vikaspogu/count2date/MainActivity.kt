@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.vikaspogu.count2date.ui.home.HomeScreen
 import com.vikaspogu.count2date.ui.theme.Count2DateTheme
+import com.vikaspogu.count2date.worker.scheduleDailyWidgetRefresh
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,5 +28,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        scheduleDailyWidgetRefresh(this)
     }
 }
