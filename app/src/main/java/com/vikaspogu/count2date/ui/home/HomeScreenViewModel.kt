@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vikaspogu.count2date.data.model.Event
 import com.vikaspogu.count2date.data.repository.EventRepository
+import com.vikaspogu.count2date.ui.utils.getYesterdaysDate
 import com.vikaspogu.count2date.ui.widget.DetailsWidget
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -27,7 +28,7 @@ class HomeScreenViewModel @Inject constructor(private val eventRepository: Event
     ViewModel() {
 
     val eventsUiState: StateFlow<EventsUiState> =
-        eventRepository.getAllEvents().map { EventsUiState(it) }.stateIn(
+        eventRepository.getAllEventsByDate(getYesterdaysDate()).map { EventsUiState(it) }.stateIn(
             scope = viewModelScope, started = SharingStarted.WhileSubscribed(
                 TIMEOUT_MILLIS
             ), initialValue = EventsUiState()

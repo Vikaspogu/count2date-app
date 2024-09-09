@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
@@ -153,6 +154,7 @@ fun HomeScreen(modifier: Modifier, viewModel: HomeScreenViewModel = hiltViewMode
 
 
     }) {
+        Log.d("<<<<<<<Mina",Calendar.getInstance().timeInMillis.toString())
         LazyColumn(
             modifier = Modifier
                 .padding(top = 125.dp)

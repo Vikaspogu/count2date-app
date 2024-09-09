@@ -36,6 +36,7 @@ import com.vikaspogu.count2date.data.repository.EventRepository
 import com.vikaspogu.count2date.ui.home.formatDate
 import com.vikaspogu.count2date.ui.utils.GlanceText
 import com.vikaspogu.count2date.ui.utils.getDaysLeft
+import com.vikaspogu.count2date.ui.utils.getYesterdaysDate
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
@@ -57,7 +58,7 @@ class DetailsWidget : GlanceAppWidget() {
         val eventRepository = eventEntryPoint.eventRepository()
 
         provideContent {
-            val events by eventRepository.getAllEvents().collectAsState(initial = emptyList())
+            val events by eventRepository.getAllEventsByDate(getYesterdaysDate()).collectAsState(initial = emptyList())
             GlanceTheme {
                 Scaffold(
                     modifier = GlanceModifier.fillMaxSize().background(Color.DarkGray),

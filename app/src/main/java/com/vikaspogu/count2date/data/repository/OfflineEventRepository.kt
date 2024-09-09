@@ -8,6 +8,8 @@ import javax.inject.Inject
 class OfflineEventRepository @Inject constructor(private val eventDao: EventDao): EventRepository {
     override fun getAllEvents(): Flow<List<Event>> = eventDao.getAllEvents()
 
+    override fun getAllEventsByDate(date: Long): Flow<List<Event>> = eventDao.getAllEventsByDate(date)
+
     override suspend fun insertEvent(event: Event) = eventDao.insert(event)
 
     override suspend fun updateEvent(event: Event) = eventDao.update(event)
