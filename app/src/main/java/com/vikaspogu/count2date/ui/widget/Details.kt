@@ -86,7 +86,7 @@ fun DetailsCard(events: List<Event>) {
                     modifier = GlanceModifier
                         .fillMaxSize()
                         .wrapContentSize()
-                        .background(Color.LightGray)
+                        .background(Color.White)
                         .cornerRadius(5.dp) // Makes the background circular
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalAlignment = Alignment.CenterVertically) {
