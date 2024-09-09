@@ -131,7 +131,7 @@ fun HomeScreen(modifier: Modifier, viewModel: HomeScreenViewModel = hiltViewMode
                 onClick = {
                     openDialog = true
                 },
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -155,7 +155,7 @@ fun HomeScreen(modifier: Modifier, viewModel: HomeScreenViewModel = hiltViewMode
     }) {
         LazyColumn(
             modifier = Modifier
-                .padding(top = 100.dp)
+                .padding(top = 125.dp)
                 .fillMaxSize()
                 .nestedScroll(nestedScrollConnection),
             contentPadding = PaddingValues(vertical = 12.dp),
@@ -360,7 +360,7 @@ fun EventCard(event: Event, viewModel: HomeScreenViewModel) {
     }
     Surface(
         shape = MaterialTheme.shapes.large,
-        color = MaterialTheme.colorScheme.primaryContainer,
+        color = MaterialTheme.colorScheme.tertiaryContainer,
         shadowElevation = 5.dp,
         modifier = Modifier
             .fillMaxWidth()
