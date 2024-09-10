@@ -13,7 +13,7 @@ interface EventDao{
     @Query("SELECT * FROM events ORDER BY event_date ASC")
     fun getAllEvents(): Flow<List<Event>>
 
-    @Query("SELECT * FROM events WHERE event_date >= :date ORDER BY event_date ASC")
+    @Query("SELECT * FROM events WHERE event_date > :date ORDER BY event_date ASC")
     fun getAllEventsByDate(date: Long): Flow<List<Event>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

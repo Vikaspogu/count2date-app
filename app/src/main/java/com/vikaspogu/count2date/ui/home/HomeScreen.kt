@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
@@ -72,6 +71,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.vikaspogu.count2date.R
 import com.vikaspogu.count2date.data.model.Event
 import com.vikaspogu.count2date.ui.utils.getDaysLeft
+import com.vikaspogu.count2date.ui.utils.getSystemTimeInMillsAtMidNight
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -145,7 +145,7 @@ fun HomeScreen(modifier: Modifier, viewModel: HomeScreenViewModel = hiltViewMode
                 DialogManageEvent(
                     onDismissRequest = { openDialog = false },
                     onConfirmation = { openDialog = false },
-                    event = Event(0, "", Calendar.getInstance().timeInMillis),
+                    event = Event(0, "", getSystemTimeInMillsAtMidNight()),
                     actionType = stringResource(id = R.string.add),
                     viewModel = viewModel
                 )
@@ -154,7 +154,6 @@ fun HomeScreen(modifier: Modifier, viewModel: HomeScreenViewModel = hiltViewMode
 
 
     }) {
-        Log.d("<<<<<<<Mina",Calendar.getInstance().timeInMillis.toString())
         LazyColumn(
             modifier = Modifier
                 .padding(top = 125.dp)
@@ -445,7 +444,7 @@ private fun showDatePicker(
         date[Calendar.MONTH],
         date[Calendar.DAY_OF_MONTH]
     )
-    datePicker.datePicker.minDate = Calendar.getInstance().timeInMillis - 1000
+    datePicker.datePicker.minDate = getSystemTimeInMillsAtMidNight()
     datePicker.show()
 }
 

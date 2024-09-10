@@ -1,7 +1,6 @@
 package com.vikaspogu.count2date.ui.home
 
 import android.content.Context
-import android.icu.util.Calendar
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -10,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vikaspogu.count2date.data.model.Event
 import com.vikaspogu.count2date.data.repository.EventRepository
-import com.vikaspogu.count2date.ui.utils.getYesterdaysDate
+import com.vikaspogu.count2date.ui.utils.getSystemTimeInMillsAtMidNight
 import com.vikaspogu.count2date.ui.widget.DetailsWidget
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -24,16 +23,19 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeScreenViewModel @Inject constructor(private val eventRepository: EventRepository, @ApplicationContext private val appContext: Context,) :
+class HomeScreenViewModel @Inject constructor(
+    private val eventRepository: EventRepository,
+    @ApplicationContext private val appContext: Context
+) :
     ViewModel() {
 
     val eventsUiState: StateFlow<EventsUiState> =
-        eventRepository.getAllEventsByDate(getYesterdaysDate()).map { EventsUiState(it) }.stateIn(
+        eventRepository.getAllEventsByDate(getSystemTimeInMillsAtMidNight()).map { EventsUiState(it) }.stateIn(
             scope = viewModelScope, started = SharingStarted.WhileSubscribed(
                 TIMEOUT_MILLIS
             ), initialValue = EventsUiState()
         )
-    private val _eventDate = mutableLongStateOf(Calendar.getInstance().timeInMillis)
+    private val _eventDate = mutableLongStateOf(getSystemTimeInMillsAtMidNight())
     var eventDate: State<Long> = _eventDate
     fun updateEventDate(date: Long) {
         _eventDate.longValue = date
